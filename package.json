@@ -1,0 +1,25 @@
+{
+	"name": "wakatime-hbuilderx",
+	"description": "Wakatime plug-in of hbuilderx",
+	"displayName": "wakatime",
+	"version": "1.0.0",
+	"publisher": "zimo",
+	"engines": {
+		"HBuilderX": "^2.7.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"main": "./extension",
+	"activationEvents": [
+		"*"
+	],
+	"contributes": {},
+	"extensionDependencies": [
+		"plugin-manager"
+	],
+	"dependencies": {
+		"ini": "^1.3.5",
+		"request": "^2.88.2"
+	}
+}
