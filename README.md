@@ -16,13 +16,13 @@
 
 ## offline
 
-1. 下载[release](https://github.com/ZimoLoveShuang/wakatime-hbuilderx/releases)中的`wakatime-hbuilderx.zip`
+1. 下载[release](https://github.com/ZimoLoveShuang/hbuilderx-wakatime/releases)中的`hbuilderx-wakatime.zip`
 2. 解压到`hbuilderx的安装目录/plugins`下
 3. 重启hbuilderx
 
 ## 源码安装
 
-1. clone 此项目，`git clone https://github.com/ZimoLoveShuang/wakatime-hbuilderx`
+1. clone 此项目，`git clone https://github.com/ZimoLoveShuang/hbuilderx-wakatime`
 2. 安装，`nodejs`
 3. 安装依赖，`npm install`
 3. 将整个项目复制到`hbuilderx的安装目录/plugins`下

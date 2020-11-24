@@ -105,13 +105,13 @@ function handleAction(isWrite, api_key) {
 
 //该方法将在插件激活的时候调用
 function activate(context) {
-	console.log('wakatime-hbuilderx started.')
-	console.log('wakatime init.')
+	console.log('hbuilderx-wakatime started.')
+	console.log('hbuilderx-wakatime init.')
 	console.log('check api_key')
 	var api_key = read_api_key()
 	console.log('the api_key is ' + api_key)
 	hx.window.showInformationMessage(
-		'wakatime init success. <a href="https://github.com/ZimoLoveShuang/wakatime-hbuilderx">plugin details</a>');
+		'hbuilderx-wakatime init success. <a href="https://github.com/ZimoLoveShuang/hbuilderx-wakatime">plugin details</a>');
 	console.log('binding to ide events.')
 	hx.workspace.onDidChangeTextDocument(function(event) {
 		let document = event.document;
@@ -126,7 +126,7 @@ function activate(context) {
 
 //该方法将在插件禁用的时候调用（目前是在插件卸载的时候触发）
 function deactivate() {
-	console.log('wakatime-hbuilderx stoped.')
+	console.log('hbuilderx-wakatime stoped.')
 }
 
 module.exports = {
