@@ -6,8 +6,8 @@ const path = require('path')
 const ini = require('ini')
 const request = require('request')
 
-const plugin_name = 'wakatime-hbuilderx'
-const plugin_version = '1.0.0'
+const plugin_name = 'HbuilderX-wakatime'
+const plugin_version = '1.0.1'
 const ide = hx.env.appName
 const ide_version = hx.env.appVersion
 const config_path = path.format({
@@ -71,7 +71,8 @@ function sendHeartbeat(file, time, project, language, isWrite, lines, api_key) {
 		method: 'POST',
 		json: true,
 		headers: {
-			'content-type': 'application/json',
+			'Content-Type': 'application/json',
+			'User-Agent': ide + '/' + ide_version + ' ' + plugin_name + '/' + plugin_version,
 			'Authorization': 'Basic ' + Buffer.from(api_key).toString('base64')
 		},
 		body: data
@@ -95,7 +96,6 @@ function handleAction(isWrite, api_key) {
 				hx.workspace.getWorkspaceFolder("%fsPath%").then(function(wsFolder) {
 					var language = currentDocument.languageId ? currentDocument.languageId : undefined
 					var project = wsFolder.name ? wsFolder.name : undefined
-					var editor = ide
 					var lines = currentDocument.lineCount ? currentDocument.lineCount : undefined
 					sendHeartbeat(currentDocument.uri.fsPath, time, project, language, isWrite, lines, api_key)
 				})
@@ -110,6 +110,8 @@ function activate(context) {
 	console.log('check api_key')
 	var api_key = read_api_key()
 	console.log('the api_key is ' + api_key)
+	hx.window.showInformationMessage(
+		'wakatime init success. <a href="https://github.com/ZimoLoveShuang/wakatime-hbuilderx">plugin details</a>');
 	console.log('binding to ide events.')
 	hx.workspace.onDidChangeTextDocument(function(event) {
 		let document = event.document;
