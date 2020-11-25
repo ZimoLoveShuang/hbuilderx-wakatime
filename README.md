@@ -16,7 +16,7 @@
 
 ## offline
 
-1. 下载[release](https://github.com/ZimoLoveShuang/hbuilderx-wakatime/releases)中的`hbuilderx-wakatime.zip`
+1. 下载最新的[release](https://github.com/ZimoLoveShuang/hbuilderx-wakatime/releases)中的`hbuilderx-wakatime.zip`
 2. 解压到`hbuilderx的安装目录/plugins`下
 3. 重启hbuilderx
 
@@ -30,6 +30,7 @@
 
 # 更新日志
 
+- 2020-11-26 一些小优化 v1.0.2
 - 2020-11-24 修复识别为Unknown Editor的bug v1.0.1
 - 2020-11-23 发布 v1.0.0
 
