@@ -2,7 +2,7 @@
 	"name": "wakatime-hbuilderx",
 	"description": "Wakatime plug-in of hbuilderx",
 	"displayName": "wakatime",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"publisher": "zimo",
 	"engines": {
 		"HBuilderX": "^2.7.0"

@@ -7,7 +7,7 @@ const ini = require('ini')
 const request = require('request')
 
 const plugin_name = 'HbuilderX-wakatime'
-const plugin_version = '1.0.2'
+const plugin_version = '1.0.3'
 const ide = hx.env.appName
 const ide_version = hx.env.appVersion
 const config_path = path.format({
@@ -17,7 +17,7 @@ const config_path = path.format({
 
 var lastAction = 0
 var lastFile = undefined
-var debug = false
+var debug = true
 var partten = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/
 
 // 读取api_key，如果不存在就创建
@@ -53,7 +53,7 @@ function enoughTimePassed() {
 }
 
 // 发送心跳包
-function sendHeartbeat(file, time, project, language, isWrite, lines, api_key) {
+function sendHeartbeat(file, time, project, language, isWrite, lines) {
 	var data = {
 		entity: file,
 		type: 'file',
@@ -73,7 +73,7 @@ function sendHeartbeat(file, time, project, language, isWrite, lines, api_key) {
 		json: true,
 		headers: {
 			'Content-Type': 'application/json',
-			'User-Agent': ide + '/' + ide_version + ' ' + plugin_name + '/' + plugin_version,
+			'User-Agent': ide + '/' + ide_version + ' (' + os.type() + ' ' + os.release() + ')',
 			'Authorization': 'Basic ' + Buffer.from(api_key).toString('base64')
 		},
 		body: data
@@ -87,19 +87,18 @@ function sendHeartbeat(file, time, project, language, isWrite, lines, api_key) {
 	lastFile = file
 }
 
-function handleAction(isWrite, api_key) {
+function handleAction(isWrite) {
+	api_key = read_api_key()
 	hx.window.getActiveTextEditor()
 		.then(function(editor) {
 			var currentDocument = editor.document
 			if (debug) console.log(currentDocument)
 			var time = Date.now()
 			if (isWrite || enoughTimePassed() || lastFile !== currentDocument.uri.fsPath) {
-				hx.workspace.getWorkspaceFolder("%fsPath%").then(function(wsFolder) {
-					var language = currentDocument.languageId ? currentDocument.languageId : undefined
-					var project = wsFolder.name ? wsFolder.name : undefined
-					var lines = currentDocument.lineCount ? currentDocument.lineCount : undefined
-					sendHeartbeat(currentDocument.uri.fsPath, time, project, language, isWrite, lines, api_key)
-				})
+				var language = currentDocument.languageId ? currentDocument.languageId : undefined
+				var project = currentDocument.workspaceFolder.name ? currentDocument.workspaceFolder.name : undefined
+				var lines = currentDocument.lineCount ? currentDocument.lineCount : undefined
+				sendHeartbeat(currentDocument.uri.fsPath, time, project, language, isWrite, lines, api_key)
 			}
 		})
 }
@@ -119,15 +118,15 @@ function activate(context) {
 	hx.workspace.onDidChangeTextDocument(function(event) {
 		let document = event.document;
 		if (debug) console.log('文档被修改时的事件' + JSON.stringify(document))
-		handleAction(true, api_key)
+		handleAction(true)
 	})
 	hx.workspace.onDidSaveTextDocument(function(document) {
 		if (debug) console.log('文档被保存时的事件' + JSON.stringify(document))
-		handleAction(true, api_key)
+		handleAction(true)
 	})
 	hx.workspace.onDidOpenTextDocument(function(document) {
 		if (debug) console.log('文档被打开时的事件' + JSON.stringify(document))
-		handleAction(true, api_key)
+		handleAction(true)
 	})
 }
 
